@@ -2,7 +2,7 @@ from lexer import Lexer
 from token import Token
 
 lexer = Lexer()
-lexer.load_program('function bar() yeah end')
+lexer.load_program('a = 3 b = function bar() 3 + 2 * 10 end print(a())')
 while True:
 	tok = lexer.next_token()
 	print(tok)

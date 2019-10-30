@@ -18,16 +18,35 @@ class Lexer:
 		char = self.currchar
 		if char is None:
 			return Token(Token.EOF, '(EOF)')
-		if char == '(':
+		if char == '=':
+			if self.peak_char() == '=':
+				token = Token(Token.EQUALITY, '==')
+				self.read_char()
+			else:
+				token = Token(Token.ASSIGNMENT, '=')
+		elif char == '(':
 			token = Token(Token.LPAREN, '(')
 		elif char == ')':
 			token = Token(Token.RPAREN, ')')
+		elif char == ',':
+			token = Token(Token.COMMA, ',')
+		elif char == '+':
+			token = Token(Token.PLUS, '+')
+		elif char == '-':
+			token = Token(Token.MINUS, '-')
+		elif char == '*':
+			token = Token(Token.ASTERISK, '*')
+		elif char == '/':
+			token = Token(Token.SLASH, '/')
 		else:
 			ident = self.read_identifier()
 			if ident in Token.IDENTIFIER_LOOKUP:
 				token = Token(Token.IDENTIFIER_LOOKUP[ident], ident)
 			else:
-				token = Token(Token.IDENTIFIER, ident)
+				if ident.isdigit():
+					token = Token(Token.INTEGER, int(ident))
+				else:
+					token = Token(Token.IDENTIFIER, ident)
 		self.read_char()
 		return token
 

@@ -7,6 +7,14 @@ class Token:
 	INTEGER = 5
 	STRING = 6
 	EOF = 7
+	PLUS = 8
+	MINUS = 9
+	ASTERISK = 10
+	SLASH = 11
+	ASSIGNMENT = 12
+	EQUALITY = 13
+	COMMA = 14
+
 
 	IDENTIFIER_LOOKUP = {
 		'end': BLOCKEND,
