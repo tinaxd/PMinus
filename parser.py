@@ -66,7 +66,6 @@ class Parser:
 			peek = self.tokens[self.tok_ptr + 1]
 			self.tok_ptr += 1
 			if peek.token_type == Token.PLUS:
-				print('Peeked plus')
 				self.tok_ptr += 1
 				return ast.ASTPlus(integer, self.parse_expression())
 			elif peek.token_type == Token.MINUS:
@@ -91,9 +90,22 @@ class Parser:
 				args = self.parse_call_arguments()
 				lookast = ast.ASTLookupValue('function', raw_val.literal)
 				lookast.args = args
-				return lookast
+				peek = self.tokens[self.tok_ptr]
+				if peek.token_type == Token.PLUS:
+					self.tok_ptr += 1
+					return ast.ASTPlus(lookast, self.parse_expression())
+				elif peek.token_type == Token.MINUS:
+					self.tok_ptr += 1
+					return ast.ASTMinus(lookast, self.parse_expression())
+				elif peek.token_type == Token.ASTERISK:
+					self.tok_ptr += 1
+					return ast.ASTMultiply(lookast, self.parse_expression())
+				elif peek.token_type == Token.SLASH:
+					self.tok_ptr += 1
+					return ast.ASTDivide(lookast, self.parse_expression())
+				else:
+					return lookast
 			elif peek.token_type == Token.PLUS:
-				print('Peeked plus')
 				self.tok_ptr += 1
 				return ast.ASTPlus(valued, self.parse_expression())
 			elif peek.token_type == Token.MINUS:

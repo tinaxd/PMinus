@@ -3,7 +3,19 @@ from token import Token
 from parser import Parser
 
 lexer = Lexer()
-lexer.load_program('a = 3 5 b = function bar(x) x+2 end print(b(5))')
+lexer.load_program('''
+i = 5
+fn1 = function fn1(x)
+	x - 1
+end
+
+mul2 = function mul2(x)
+	fn1(x) * 2 + 10 / 3
+end
+
+print(mul2(i))
+
+''')
 
 parser = Parser(lexer)
 parser.prepare()
